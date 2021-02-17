@@ -1,12 +1,12 @@
 /* Replace "dll.h" with the name of your header */
-#include "../include/libimage.hpp"
+#include "libimage.hpp"
 #include <windows.h>
 
 #define STB_IMAGE_IMPLEMENTATION
-#include "../extlibs/stb_image.h"
+#include "extlibs/stb_image.h"
 
 #define STB_IMAGE_WRITE_IMPLEMENTATION
-#include "../extlibs/stb_image_write.h"
+#include "extlibs/stb_image_write.h"
 #include <iostream>
 
 #include <algorithm>
@@ -23,6 +23,15 @@ namespace{
 }
 
 namespace png{
+	
+	Image::Image(const Image &imagen){
+		this->m_width  = imagen.m_width;
+		this->m_height = imagen.m_height;
+	}
+	
+	Image::Image(const std::string &filename){
+		this->loadFromFile(filename);
+	}
 	
 	Image::Image() : m_width(0) , m_height(0) {}
 	Image::~Image(){}
@@ -166,4 +175,38 @@ namespace png{
 		this->m_pixels.reserve(this->m_width*this->m_height);
 	}
 	
+	unsigned int Image::getwidth(){
+		return this->m_width;
+	}
+	
+	unsigned int Image::getheight(){
+		return this->m_height;
+	}
+	
+}
+
+BOOL WINAPI DllMain(HINSTANCE hinstDLL,DWORD fdwReason,LPVOID lpvReserved)
+{
+	switch(fdwReason)
+	{
+		case DLL_PROCESS_ATTACH:
+		{
+			break;
+		}
+		case DLL_PROCESS_DETACH:
+		{
+			break;
+		}
+		case DLL_THREAD_ATTACH:
+		{
+			break;
+		}
+		case DLL_THREAD_DETACH:
+		{
+			break;
+		}
+	}
+	
+	/* Return TRUE on success, FALSE on failure */
+	return TRUE;
 }

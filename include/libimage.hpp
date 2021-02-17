@@ -1,6 +1,13 @@
 #ifndef IMAGE_LIBIMAGE_HPP
 #define IMAGE_LIBIMAGE_HPP
 
+#if BUILDING_DLL
+#define LIBIMAGE_API __declspec(dllexport)
+#else
+#define LIBIMAGE_API __declspec(dllimport)
+#endif
+
+
 #include <vector>
 #include <string>
 
@@ -15,9 +22,11 @@ namespace png{
 		png_byte a;
 	}png_color;
 	
-	class Image{
+	class LIBIMAGE_API Image{
 	public:
 		
+		Image(const Image &imagen);
+		Image(const std::string &filename);
 		Image();
 		virtual ~Image();
 		
